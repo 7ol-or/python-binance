@@ -1,4 +1,5 @@
 import asyncio
+import time
 import threading
 from typing import Optional, Dict
 
@@ -32,7 +33,10 @@ class ThreadedApiManager(threading.Thread):
         ...
 
     async def socket_listener(self):
-        self._client = await AsyncClient.create(loop=self._loop, **self._client_params)
+        self._client = AsyncClient(loop=self._loop, **self._client_params)
+        await self._client.ping()
+        res = await self._client.get_server_time()
+        self._client.timestamp_offset = res['serverTime'] - int(time.time() * 1000)
         await self._before_socket_listener_start()
         while self._running:
             await asyncio.sleep(0.2)
