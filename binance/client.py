@@ -38,7 +38,7 @@ class BaseClient:
     FUTURES_API_VERSION2 = "v2"
     OPTIONS_API_VERSION = 'v1'
 
-    REQUEST_TIMEOUT: float = 10
+    REQUEST_TIMEOUT: float = 30
 
     SYMBOL_TYPE_SPOT = 'SPOT'
 
